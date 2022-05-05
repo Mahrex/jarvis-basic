@@ -1,6 +1,10 @@
 # using for text-to-speech communication
 import pyttsx3
 import pyaudio
+import wikipedia
+import webbrowser
+import os
+import time
 
 # will take commands
 import speech_recognition as sr
@@ -53,7 +57,7 @@ def take_command():
     try:
         print('Recognizing...!') # recognizing the audio that user said
         query = r.recognize_google(audio, language='en-in') # get the data in Indian accent
-        print(f"User said : {query}\n")
+        print(f"User said: {query}\n")
     except Exception as e:
         print('Please say that again...!')
         return 'None'
@@ -62,4 +66,104 @@ def take_command():
     
 if __name__ == '__main__':
     wishMe()
-    take_command()
+    
+    # tasks that can Jarvis do for us
+    awake = True 
+    while awake:
+        query = take_command().lower() # storing the data, user is saying
+        
+        # searching for something, someone 
+        if 'wikipedia' in query or 'do you know' in query or 'who is' in query:
+            speak('Searching...')
+            results = wikipedia.summary(query,sentences=3)
+            speak('According to wikipedia...')
+            print(results)
+            speak(results)
+        
+        # opening websites in webbrowser    
+        elif 'open google' in query: # done
+            print('Opening google')
+            speak('Opening google sir')
+            webbrowser.open('https://www.google.com/')
+             
+        elif 'open youtube' in query: # done
+            print('Opening youtube')
+            speak('Opening youtube sir')
+            webbrowser.open('https://www.youtube.com/')
+            
+        elif 'open github' in query: # done
+            print('Opening github')
+            speak('Opening github sir')
+            webbrowser.open('https://github.com/')
+            
+        elif 'open linkedin' in query: # done
+            print('Opening linkedin')
+            speak('Opening linkedin sir')
+            webbrowser.open('https://www.linkedin.com/feed/')
+            
+        elif 'open outlook' in query: # done 
+            print('Opening outlook')
+            speak('Opening outlook sir')
+            webbrowser.open('https://outlook.live.com/mail/0/')
+            
+        elif 'open email' in query: # done
+            print('Opening email')
+            speak('Opening email sir')
+            webbrowser.open('https://mail.google.com/mail/u/0/#inbox')
+            
+        elif 'open facebook' in query: # done
+            print('Opening facebook')
+            speak('Opening facebook sir')
+            webbrowser.open('https://www.facebook.com/')
+            
+        elif 'open twitter' in query: # done
+            print('Opening twitter')
+            speak('Opening twitter sir')
+            webbrowser.open('https://twitter.com/home')
+            
+        elif 'open whatsapp' in query: # done
+            print('Opening whatsapp')
+            speak('Opening whatsapp sir')
+            webbrowser.open('https://web.whatsapp.com/')
+        
+        elif 'open stack overflow' in query: # done
+            print('Opening stackoverflow')
+            speak('Opening stackoverflow')
+            webbrowser.open('https://stackoverflow.com/')
+            
+        # get the current time
+        elif 'the time' in query: # done
+            str_time = datetime.datetime.now().strftime('%H:%M:%S')
+            print(f'Time is {str_time}')
+            speak(f'Sir the current time is {str_time}')
+            
+        # get the date
+        elif 'the date' in query: # done
+            str_date = datetime.datetime.now().strftime('%d/%m/%y')
+            print(f'Date is {str_date}')
+            speak(f'Sir the current date is {str_date}')
+        
+        # clear output screen
+        elif 'clear screen' in query: # done
+            speak('Clearing screen sir.')
+            os.system('cls')
+            
+        # open apps and softwares
+        elif 'open code' in query: # done
+            code_path = "C:\\Users\\shaun\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+            print('Opening VS Code')
+            speak('Opening VS code sir')
+            os.startfile(code_path)
+            
+        elif 'open server' in query: # fix
+            server_path = ' "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe" "--defaults-file=C:\\ProgramData\\MySQL\\MySQL Server 8.0\\my.ini" "-uroot" "-p" '
+            print('Opening MySQL Server')
+            speak('Opening MySQL Server sir')
+            os.startfile(server_path)
+            
+            
+        # switch off jarvis
+        elif 'switch off' in query:
+            print('Switching off...!')
+            speak('Going to sleep sir.')
+            awake = False
